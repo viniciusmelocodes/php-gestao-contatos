@@ -20,15 +20,15 @@
                 <th>Telefone</th>
                 <th>E-mail</th>
             </tr>
-            <?php foreach ($listaContatos as $contato) { ?>
+            <?php foreach ($contatos as $contato) { ?>
                 <tr>
                     <td>
-                        <a href="/contatos/edit.php?id=<?php echo $contato['id']; ?>"><button>Editar</button></a>
-                        <a href="/contatos/remove.php?id=<?php echo $contato['id']; ?>"><button>Remover</button></a>
+                        <a href="/contatos/edit.php?id=<?php echo $contato->getId(); ?>"><button>Editar</button></a>
+                        <a href="/contatos/remove.php?id=<?php echo $contato->getId(); ?>"><button>Remover</button></a>
                     </td>
-                    <td><?php echo $contato['nome'] ?></td>
-                    <td><?php echo $contato['telefone'] ?></td>
-                    <td><?php echo $contato['email'] ?></td>                    
+                    <td><?php echo $contato->getNome(); ?></td>
+                    <td><?php echo $contato->getTelefone(); ?></td>
+                    <td><?php echo $contato->getEmail(); ?></td>                    
                 </tr>
             <?php } ?>
         </table>

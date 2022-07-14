@@ -1,9 +1,13 @@
 <?php
-    require "database/database.php";
+    include_once "../configuracao/configuracao.php";
+    include_once "../classes/Contato.php";
+    include_once "../classes/RepositorioContatos.php";
 
-    $contato = buscarContato($conexao, $_GET['id']);
-    excluirContato($conexao, $contato['id']);
+    $repositorioContatos = new RepositorioContatos($mysqli);
 
-    setcookie('mensagem', 'Contato '. $contato['nome'] . ' excluído com sucesso');
-    
+    $contato = $repositorioContatos->buscar($_GET['id']);
+    $repositorioContatos->remover($contato->getId());
+
+    setcookie('mensagem', 'Contato '. $contato->getNome() . ' excluído com sucesso');
+
     header("Location: /contatos");

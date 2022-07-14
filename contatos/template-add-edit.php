@@ -25,7 +25,7 @@ if (count($params) > 0) {
         <h1>Gestão de Contatos</h1>
 
         <form method="POST">
-            <input type="hidden" name="id" value="<?php echo $contato['id']; ?>" />
+            <input type="hidden" name="id" value="<?php echo $contato->getId(); ?>" />
             <fieldset>
                 <legend>
 <?php
@@ -38,7 +38,7 @@ if (count($params) > 0) {
                 </legend>
                 <label>
                     Nome
-                    <input type="text" name="nome_contato" id="nome_contato" value="<?php echo $contato['nome']; ?>">
+                    <input type="text" name="nome_contato" id="nome_contato" value="<?php echo $contato->getNome(); ?>">
                     <?php
                     if ($temErros && array_key_exists('nome', $errosValidacao)) { ?>
                     <span class="erro">
@@ -48,7 +48,7 @@ if (count($params) > 0) {
                 </label>
                 <label>
                     Telefone
-                    <input type="text" name="telefone_contato" id="telefone_contato" value="<?php echo $contato['telefone']; ?>">
+                    <input type="text" name="telefone_contato" id="telefone_contato" value="<?php echo $contato->getTelefone(); ?>">
                     <?php
                     if ($temErros && array_key_exists('telefone', $errosValidacao)) { ?>
                     <span class="erro">
@@ -58,7 +58,7 @@ if (count($params) > 0) {
                 </label>
                 <label>
                     E-mail
-                    <input type="email" name="email_contato" id="email_contato" value="<?php echo $contato['email']; ?>">
+                    <input type="email" name="email_contato" id="email_contato" value="<?php echo $contato->getEmail(); ?>">
                     <?php
                     if ($temErros && array_key_exists('email', $errosValidacao)) { ?>
                     <span class="erro">

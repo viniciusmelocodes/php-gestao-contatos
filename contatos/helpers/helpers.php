@@ -2,8 +2,5 @@
 
 function temPost()
 {
-    if (count($_POST) > 0) {
-        return true;
-    }
-    return false;
+    return count($_POST) > 0 ? true : false;
 }

@@ -12,47 +12,29 @@ CREATE TABLE `contatos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 */
 
-    $hostname = '127.0.0.1';
-    $user = 'root';
-    $password = 'root';
-    $database = 'contatos';
-    $port = '3307';
-    
-    $conexao = mysqli_connect(
-        $hostname,
-        $user,
-        $password,
-        $database,
-        $port
-    );
-    
-    if (mysqli_connect_errno($conexao)) {
-        echo "Problemas para conectar no banco. Erro: ";
-        echo mysqli_connect_error();
-        die();
+function buscarContatos($mysqli)
+{
+    $sqlBusca = 'SELECT * FROM contatos';
+    $registros = $mysqli->query($sqlBusca);
+    $contatos = [];
+
+    foreach ($registros as $contato) {
+        $contatos[] = $contato;
     }
 
-    function buscarContatos($conexao)
-    {
-        $sqlBusca = 'SELECT * FROM contatos';
-        $registros = mysqli_query($conexao, $sqlBusca);
-        $contatos = [];
-        while ($contato = mysqli_fetch_assoc($registros)) {
-            $contatos[] = $contato;
-        }
-        return $contatos;
-    }
+    return $contatos;
+}
 
-    function buscarContato($conexao, $id)
-    {
-        $sqlBusca = 'SELECT * FROM contatos WHERE id = ' . $id;
-        $resultado = mysqli_query($conexao, $sqlBusca);
-        return mysqli_fetch_assoc($resultado);
-    }
+function buscarContato($mysqli, $id)
+{
+    $sqlBusca = 'SELECT * FROM contatos WHERE id = ' . $id;
+    $resultado = mysqli_query($mysqli, $sqlBusca);
+    return mysqli_fetch_assoc($resultado);
+}
 
-    function salvarContato($conexao, $contato)
-    {
-        $sqlGravar = "
+function salvarContato($mysqli, $contato)
+{
+    $sqlGravar = "
             INSERT INTO contatos
             (nome, telefone, email)
             VALUES
@@ -62,23 +44,23 @@ CREATE TABLE `contatos` (
             '{$contato['email']}'
             )
             ";
-        mysqli_query($conexao, $sqlGravar);
-    }
+    mysqli_query($mysqli, $sqlGravar);
+}
 
-    function atualizarContato($conexao, $contato)
-    {
-        $sqlEditar = "
+function atualizarContato($mysqli, $contato)
+{
+    $sqlEditar = "
             UPDATE contatos SET
             nome = '{$contato['nome']}',
             telefone = '{$contato['telefone']}',
             email = '{$contato['email']}'
             WHERE id = {$contato['id']}
             ";
-        mysqli_query($conexao, $sqlEditar);
-    }
+    mysqli_query($mysqli, $sqlEditar);
+}
 
-    function excluirContato($conexao, $id)
-    {
-        $sqlRemover = "DELETE FROM contatos WHERE id = {$id}";
-        mysqli_query($conexao, $sqlRemover);
-    }
+function excluirContato($mysqli, $id)
+{
+    $sqlRemover = "DELETE FROM contatos WHERE id = {$id}";
+    mysqli_query($mysqli, $sqlRemover);
+}
