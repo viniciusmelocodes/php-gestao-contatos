@@ -3,6 +3,7 @@
     include_once "../configuracao/configuracao.php";
     include_once "../classes/Contato.php";
     include_once "../classes/RepositorioContatos.php";
+    include_once "../helpers/helpers.php";
 
     $temErros = false;
     $errosValidacao = [];
@@ -11,9 +12,7 @@
 
     $contato = new Contato();
 
-    $temPost = count($_POST) > 0 ? true : false;
-
-    if ($temPost) {
+    if (temPost()) {
         if (array_key_exists('nome_contato', $_POST) && strlen($_POST['nome_contato']) > 0) {
             $contato->setNome($_POST['nome_contato']);
         } else {

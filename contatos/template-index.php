@@ -6,33 +6,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Gestão de Contatos</title>
 
-        <link rel="stylesheet" href="contatos/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" integrity="sha512-dhpxh4AzF050JM736FF+lLVybu28koEYRrSJtTKfA4Z7jKXJNQ5LcxKmHEwruFN2DuOAi9xeKROJ4Z+sttMjqw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" integrity="sha512-S6hLYzz2hVBjcFOZkAOO+qEkytvbg2k9yZ1oO+zwXNYnQU71syCWhWtIk3UYDvUW2FCIwkzsTcwkEE58EZPnIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
-        <h1>Gestão de Contatos</h1>        
-        <span hidden class="erro" id="mensagem">            
-        </span>
-        <a href="/contatos/add.php"><button>Novo contato</button></a>
-        <table>
-            <tr>
-                <th>Ações</th>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-            </tr>
-            <?php foreach ($contatos as $contato) { ?>
+        <div class="container">
+            <center>
+                <h1>Gestão de Contatos</h1>
+            </center>
+            <div class="container">
+                <span hidden class="label label-success" id="mensagem"></span>
+            </div>
+            <a href="/contatos/add.php" class="btn btn-primary">Novo contato</a>
+            <table class="table">
                 <tr>
-                    <td>
-                        <a href="/contatos/edit.php?id=<?php echo $contato->getId(); ?>"><button>Editar</button></a>
-                        <a href="/contatos/remove.php?id=<?php echo $contato->getId(); ?>"><button>Remover</button></a>
-                    </td>
-                    <td><?php echo $contato->getNome(); ?></td>
-                    <td><?php echo $contato->getTelefone(); ?></td>
-                    <td><?php echo $contato->getEmail(); ?></td>                    
+                    <th>Ações</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
                 </tr>
-            <?php } ?>
-        </table>
+                <?php foreach ($contatos as $contato) { ?>
+                    <tr>
+                        <td>
+                            <a href="/contatos/edit.php?id=<?php echo $contato->getId(); ?>" class="btn">Editar</a>
+                            <a href="/contatos/remove.php?id=<?php echo $contato->getId(); ?>" class="btn">Remover</a>
+                        </td>
+                        <td><?php echo $contato->getNome(); ?></td>
+                        <td><?php echo $contato->getTelefone(); ?></td>
+                        <td><?php echo $contato->getEmail(); ?></td>                    
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>        
     </body>
+    
     <script>
         const getCookie = (name) => {
             return document.cookie.split(';').some(c => {
