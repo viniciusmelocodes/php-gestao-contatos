@@ -23,7 +23,8 @@ $status = boolval($url_components['query'] == '') ? 'Adicionar' : 'Editar';
             <center>
                 <h1>Gestão de Contatos</h1>
             </center>
-
+        </div>
+        <div class="container">
             <form class="form-horizontal" method="POST">
                 <input type="hidden" name="id" value="<?php echo $contato->getId(); ?>" />
                 <fieldset>
