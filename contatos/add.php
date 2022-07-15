@@ -1,6 +1,7 @@
 <?php
     session_start();
     include_once "../configuracao/configuracao.php";
+    include_once "../conexao/conexao.php";
     include_once "../classes/Contato.php";
     include_once "../classes/RepositorioContatos.php";
     include_once "../helpers/helpers.php";
@@ -8,7 +9,7 @@
     $temErros = false;
     $errosValidacao = [];
 
-    $repositorioContatos = new RepositorioContatos($mysqli);
+    $repositorioContatos = new RepositorioContatos($pdo);
 
     $contato = new Contato();
 

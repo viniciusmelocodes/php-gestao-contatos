@@ -1,7 +1,7 @@
 <?php
 $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $url_components = parse_url($url);
-parse_str($url_components['query'], $params);
+$status = boolval($url_components['query'] == '') ? 'Adicionar' : 'Editar';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,11 +11,7 @@ parse_str($url_components['query'], $params);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
 <?php
-if (count($params) > 0) {
-    echo 'Editar';
-} else {
-    echo 'Adicionar';
-}
+    echo $status;
 ?> contato
         </title>
 
@@ -32,20 +28,16 @@ if (count($params) > 0) {
                 <input type="hidden" name="id" value="<?php echo $contato->getId(); ?>" />
                 <fieldset>
                     <legend>
-    <?php
-    if (count($params) > 0) {
-        echo 'Editar';
-    } else {
-        echo 'Adicionar';
-    }
-    ?> Contato
+<?php
+    echo $status;
+?> Contato
                     </legend>
                     <div class="control-group">
                         <label class="control-label" for="nome">Nome</label>
                         <div class="controls">
                             <input type="text" name="nome_contato" id="nome_contato" value="<?php echo $contato->getNome(); ?>">
                             <?php
-                            if ($temErros && array_key_exists('nome', $errosValidacao)) { ?>
+                        if ($temErros && array_key_exists('nome', $errosValidacao)) { ?>
                             <span class="label label-warning">
                                 <?php echo $errosValidacao['nome']; ?>
                             </span>
@@ -57,7 +49,7 @@ if (count($params) > 0) {
                         <div class="controls">
                             <input type="text" name="telefone_contato" id="telefone_contato" value="<?php echo $contato->getTelefone(); ?>">
                             <?php
-                            if ($temErros && array_key_exists('telefone', $errosValidacao)) { ?>
+                        if ($temErros && array_key_exists('telefone', $errosValidacao)) { ?>
                             <span class="label label-warning">
                                 <?php echo $errosValidacao['telefone']; ?>
                             </span>
@@ -69,7 +61,7 @@ if (count($params) > 0) {
                         <div class="controls">
                             <input type="email" name="email_contato" id="email_contato" value="<?php echo $contato->getEmail(); ?>">
                             <?php
-                            if ($temErros && array_key_exists('email', $errosValidacao)) { ?>
+                        if ($temErros && array_key_exists('email', $errosValidacao)) { ?>
                             <span class="label label-warning">
                                 <?php echo $errosValidacao['email']; ?>
                             </span>
