@@ -4,7 +4,7 @@
     include_once "../classes/Contato.php";
     include_once "../classes/RepositorioContatos.php";
 
-    $repositorioContatos = new RepositorioContatos($pdo);
+    $repositorioContatos = new RepositorioContatos($mysqli);
 
     $contato = $repositorioContatos->buscar($_GET['id']);
     $repositorioContatos->remover($contato->getId());

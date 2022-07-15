@@ -3,7 +3,7 @@
     include_once "../conexao/conexao.php";
     include_once "../classes/RepositorioContatos.php";
 
-    $repositorioContatos = new RepositorioContatos($pdo);
+    $repositorioContatos = new RepositorioContatos($mysqli);
 
     $contatos = $repositorioContatos->buscar();
 

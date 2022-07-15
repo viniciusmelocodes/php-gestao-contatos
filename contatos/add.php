@@ -9,7 +9,7 @@
     $temErros = false;
     $errosValidacao = [];
 
-    $repositorioContatos = new RepositorioContatos($pdo);
+    $repositorioContatos = new RepositorioContatos($mysqli);
 
     $contato = new Contato();
 

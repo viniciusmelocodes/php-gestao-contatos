@@ -16,29 +16,30 @@ include_once "../classes/Contato.php";
 
 class RepositorioContatos
 {
-    private $pdo;
+    private $mysqli;
 
-    public function __construct(PDO $pdo)
+    public function __construct($mysqli)
     {
-        $this->pdo = $pdo;
+        $this->mysqli = $mysqli;
     }
 
     public function salvar(Contato $contato)
     {
-        $sqlInsert = "
-            INSERT INTO contatos
-            (nome, telefone, email)
-            VALUES
-            (:nome, :telefone, :email )
+        $nome = $contato->getNome();
+        $telefone = $contato->getTelefone();
+        $email = $contato->getEmail();
+
+        $sqlSalvar = "INSERT INTO contatos
+        (nome, telefone, email)
+        VALUES
+        (
+        '{$nome}',
+        '{$telefone}',
+        '{$email}'
+        )
         ";
 
-        $query = $this->pdo->prepare($sqlInsert);
-
-        $query->execute([
-            'nome' => strip_tags($contato->getNome()),
-            'telefone' => strip_tags($contato->getTelefone()),
-            'email' => strip_tags($contato->getEmail())
-        ]);
+        $this->mysqli->query($sqlSalvar);
     }
 
     public function atualizar(Contato $contato)
@@ -48,22 +49,15 @@ class RepositorioContatos
         $telefone = $contato->getTelefone();
         $email = $contato->getEmail();
         
-        $sqlUpdate = "
+        $sqlAtualizar = "
             UPDATE contatos SET
-                nome = :nome,
-                telefone = :telefone,
-                email = :email
-            WHERE id = :id
+            nome = '{$nome}',
+            telefone = '{$telefone}',
+            email = '{$email}'
+            WHERE id = {$id}
         ";
             
-        $query = $this->pdo->prepare($sqlUpdate);
-
-        $query->execute([
-            'nome' => strip_tags($contato->getNome()),
-            'telefone' => strip_tags($contato->getTelefone()),
-            'email' => strip_tags($contato->getEmail()),
-            'id' => $contato->getId(),
-        ]);
+        $this->mysqli->query($sqlAtualizar);
     }
 
     public function buscar(int $id = 0)
@@ -77,22 +71,18 @@ class RepositorioContatos
 
     private function buscarContatos()
     {
-        $sqlSelect = "SELECT * FROM contatos";
+        $sqlBusca = "SELECT * FROM contatos";
 
-        $dados = $this->pdo->query(
-            $sqlSelect,
-            PDO::FETCH_CLASS,
-            'Contato'
-        );
+        $dados = $this->mysqli->query($sqlBusca);
 
         $contatos = [];
         
-        foreach ($dados as $contato) {
+        while ($contato = mysqli_fetch_assoc($dados)) {
             $novoContato = new Contato();
-            $novoContato->setId($contato->getId());
-            $novoContato->setNome($contato->getNome());
-            $novoContato->setTelefone($contato->getTelefone());
-            $novoContato->setEmail($contato->getEmail());
+            $novoContato->setId($contato['id']);
+            $novoContato->setNome($contato['nome']);
+            $novoContato->setTelefone($contato['telefone']);
+            $novoContato->setEmail($contato['email']);
             $contatos[] = $novoContato;
         }
 
@@ -101,24 +91,16 @@ class RepositorioContatos
 
     private function buscarContato(int $id)
     {
-        $sqlSelect = "SELECT * FROM contatos WHERE id = :id";
-        $query = $this->pdo->prepare($sqlSelect);
-        $query->execute([
-            "id" => $id,
-        ]);
-
-        $contato = $query->fetchObject('Contato');
+        $sqlBusca = "SELECT * FROM contatos WHERE id = {$id}";
+        $resultado = $this->mysqli->query($sqlBusca);
+        $contato = $resultado->fetch_object('Contato');
         return $contato;
     }
 
     public function remover(int $id)
     {
-        $sqlDelete = "DELETE FROM contatos WHERE id = :id";
+        $sqlRemover = "DELETE FROM contatos WHERE id = {$id}";
 
-        $query = $this->pdo->prepare($sqlDelete);
-
-        $query->execute([
-            'id' => $id,
-        ]);
+        $this->mysqli->query($sqlRemover);
     }
 }
