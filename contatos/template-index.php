@@ -13,44 +13,42 @@
         <div class="container">
             <center>
                 <h1>Gestão de Contatos</h1>
-            </center>
-            <div class="container">
-                <span hidden class="label label-success" id="mensagem"></span>
-            </div>
-            
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span2">
-                        <!--Sidebar content-->
-                        <a href="/contatos/add.php" class="btn btn-primary">Novo contato</a>
-                    </div>
-                    <div class="span10">
-                    <!--Body content-->
-                    <table class="table">
+            </center>        
+        </div>        
+        <div class="container">
+            <span hidden class="label label-success" id="mensagem"></span>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2">
+                    <!--Sidebar content-->
+                    <a href="/contatos/add.php" class="btn btn-primary">Novo contato</a>
+                </div>
+                <div class="span10">
+                <!--Body content-->
+                <table class="table">
+                    <tr>
+                        <th>Ações</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                    </tr>
+                    <?php foreach ($contatos as $contato) { ?>
                         <tr>
-                            <th>Ações</th>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>E-mail</th>
+                            <td>
+                                <a href="/contatos/edit.php?id=<?php echo $contato->getId(); ?>" class="btn btn-warning">Editar</a>
+                                <a href="/contatos/remove.php?id=<?php echo $contato->getId(); ?>" class="btn btn-danger">Remover</a>
+                            </td>
+                            <td><?php echo $contato->getNome(); ?></td>
+                            <td><?php echo $contato->getTelefone(); ?></td>
+                            <td><?php echo $contato->getEmail(); ?></td>                    
                         </tr>
-                        <?php foreach ($contatos as $contato) { ?>
-                            <tr>
-                                <td>
-                                    <a href="/contatos/edit.php?id=<?php echo $contato->getId(); ?>" class="btn btn-warning">Editar</a>
-                                    <a href="/contatos/remove.php?id=<?php echo $contato->getId(); ?>" class="btn btn-danger">Remover</a>
-                                </td>
-                                <td><?php echo $contato->getNome(); ?></td>
-                                <td><?php echo $contato->getTelefone(); ?></td>
-                                <td><?php echo $contato->getEmail(); ?></td>                    
-                            </tr>
-                        <?php } ?>
-                    </table>
-                    </div>
+                    <?php } ?>
+                </table>
                 </div>
             </div>
-
-            
-        </div>        
+        </div>            
     </body>
     
     <script>
